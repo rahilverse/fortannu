@@ -1,0 +1,1283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hey Tannu! ✨ — Good Vibes Only</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts: Fredoka & Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Quicksand:wght@500;600;700&display=swap"
+    rel="stylesheet"
+  />
+  <!-- Canvas Confetti for cute celebration bursts -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+  <style>
+    :root {
+      --bg-cream: #fffaf5;
+      --blush: #ffdee9;
+      --lavender: #e5d9f2;
+      --mint: #d8f3dc;
+      --coral: #ff758f;
+      --deep-plum: #2d233c;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: var(--bg-cream);
+      color: var(--deep-plum);
+      overflow-x: hidden;
+      background-image:
+        radial-gradient(circle at 12% 15%, rgba(255, 214, 228, 0.55) 0%, transparent 38%),
+        radial-gradient(circle at 88% 22%, rgba(229, 217, 242, 0.65) 0%, transparent 40%),
+        radial-gradient(circle at 50% 78%, rgba(216, 243, 220, 0.55) 0%, transparent 45%);
+    }
+
+    h1, h2, h3, .font-playful {
+      font-family: 'Quicksand', 'Fredoka', sans-serif;
+    }
+
+    /* Glassmorphism pastel card */
+    .pastel-card {
+      background: rgba(255, 255, 255, 0.78);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 2px solid rgba(255, 255, 255, 0.9);
+      box-shadow: 0 14px 35px -10px rgba(173, 136, 198, 0.18);
+    }
+
+    /* Floating ambient animations */
+    @keyframes floatSlow {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-10px) rotate(4deg); }
+    }
+
+    .animate-float {
+      animation: floatSlow 4.5s ease-in-out infinite;
+    }
+
+    .animate-float-delayed {
+      animation: floatSlow 5.5s ease-in-out 1.5s infinite;
+    }
+
+    /* Vinyl spin animation */
+    @keyframes spinVinyl {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    .vinyl-spinning {
+      animation: spinVinyl 4s linear infinite;
+    }
+
+    /* Memory Card Flip 3D */
+    .perspective-1000 {
+      perspective: 1000px;
+    }
+    .transform-style-3d {
+      transform-style: preserve-3d;
+      transition: transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .rotate-y-180 {
+      transform: rotateY(180deg);
+    }
+    .backface-hidden {
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+    }
+
+    /* Cute tactile buttons */
+    .btn-bubbly {
+      transition: transform 0.18s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.18s ease;
+    }
+    .btn-bubbly:hover {
+      transform: translateY(-2px) scale(1.02);
+    }
+    .btn-bubbly:active {
+      transform: translateY(1px) scale(0.97);
+    }
+
+    /* Prevent accidental pull-to-refresh or scroll inside catch canvas on touch */
+    #catchCanvas {
+      touch-action: none;
+    }
+    /* Soundtrack reveal — stays secret until a photo is chosen */
+    @keyframes soundtrackReveal { from {opacity:0;transform:translateY(18px) scale(.97)} to {opacity:1;transform:translateY(0) scale(1)} }
+    .soundtrack-revealed { animation: soundtrackReveal .8s cubic-bezier(.2,.8,.2,1) both; }
+    .song-quote { font-family: 'Quicksand', sans-serif; line-height:1.9; }
+  </style>
+</head>
+<body class="min-h-screen selection:bg-pink-200 selection:text-pink-900">
+
+  <!-- Decorative Floating Doodles -->
+  <div class="pointer-events-none fixed inset-0 overflow-hidden z-0">
+    <span class="absolute top-12 left-6 text-2xl opacity-60 animate-float">✨</span>
+    <span class="absolute top-28 right-8 text-3xl opacity-50 animate-float-delayed">🌸</span>
+    <span class="absolute bottom-32 left-8 text-2xl opacity-50 animate-float-delayed">🎧</span>
+    <span class="absolute bottom-16 right-10 text-3xl opacity-60 animate-float">🦋</span>
+  </div>
+
+  <!-- Main Container -->
+  <main class="relative z-10 max-w-2xl mx-auto px-4 py-8 sm:py-12 space-y-10">
+
+    <!-- ==================== 1. HERO / WELCOME SECTION ==================== -->
+    <section class="pastel-card rounded-3xl p-6 sm:p-10 text-center relative overflow-hidden">
+      <!-- Top Badge -->
+      <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gradient-to-r from-pink-100 via-purple-100 to-emerald-100 border border-pink-200/70 text-xs sm:text-sm font-semibold text-purple-900 mb-5 shadow-sm">
+        <span>✨</span>
+        <span>Certified good vibes only • Built just to make you smile</span>
+      </div>
+
+      <!-- Main Greeting -->
+      <h1 class="text-4xl sm:text-5xl font-bold tracking-tight text-[#2d233c] mb-3">
+        Hey <span class="bg-gradient-to-r from-pink-500 via-rose-400 to-purple-500 bg-clip-text text-transparent">Tannu!</span> 👋
+      </h1>
+
+      <!-- Lighthearted Subtext -->
+      <p class="text-base sm:text-lg text-slate-600 max-w-md mx-auto leading-relaxed mb-7">
+        No big speeches, no boring small talk—just a cute little website built to pass the vibe check and make you smile today.
+      </p>
+
+      <!-- Interactive Vibe Check / Mood Booster Box -->
+      <div class="bg-white/80 rounded-2xl p-4 sm:p-5 border border-purple-100 max-w-md mx-auto mb-6 shadow-inner">
+        <p class="text-xs uppercase tracking-wider font-bold text-pink-500 mb-1">Live Tannu Vibe Meter</p>
+        <p id="vibeQuote" class="font-playful text-lg sm:text-xl font-medium text-slate-800 min-h-[3.25rem] flex items-center justify-center transition-all duration-300">
+          “Certified 10/10 conversation starter ✨”
+        </p>
+      </div>
+
+      <!-- Action Button -->
+      <button
+        id="vibeBoostBtn"
+        class="btn-bubbly inline-flex items-center justify-center gap-2.5 px-7 py-3.5 rounded-2xl font-playful font-semibold text-base sm:text-lg text-white bg-gradient-to-r from-pink-500 via-rose-400 to-purple-500 shadow-lg shadow-pink-300/50 cursor-pointer"
+      >
+        <span>Tap for a Vibe Boost</span>
+        <span class="text-xl">🪄</span>
+      </button>
+    </section>
+
+    <!-- ==================== 1.5. A FEW GOOD THINGS ABOUT TANNU ==================== -->
+    <section class="pastel-card rounded-3xl p-6 sm:p-8 relative overflow-hidden">
+      <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-3 mb-6">
+        <div>
+          <span class="text-xs font-bold uppercase tracking-wider text-pink-500">Appreciation Post</span>
+          <h2 class="text-2xl sm:text-3xl font-bold text-[#2d233c]">A Few Good Things About Tannu ✨</h2>
+          <p class="text-sm text-slate-600 mt-1">
+            Tap any card to flip &amp; reveal why talking to you is effortlessly the best part of the day.
+          </p>
+        </div>
+        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-100/80 text-emerald-800 text-xs font-bold self-start sm:self-auto">
+          <span>🌿</span>
+          <span>100% True Facts</span>
+        </span>
+      </div>
+
+      <!-- 4 Interactive Flip Cards Grid -->
+      <div id="tannuGoodThingsGrid" class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+        <!-- Cards injected via JS from TANNU_GOOD_THINGS config -->
+      </div>
+
+      <!-- Bonus Rotating Fact Pill + Button -->
+      <div class="bg-gradient-to-r from-pink-50/90 via-purple-50/90 to-emerald-50/90 rounded-2xl p-4 sm:p-5 border border-pink-200/60 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div class="text-center sm:text-left">
+          <span class="text-[11px] font-bold uppercase tracking-wider text-purple-600 block mb-0.5">
+            Bonus Tannu Fact 💫
+          </span>
+          <p id="extraTannuFactText" class="font-playful text-base sm:text-lg font-semibold text-slate-800 transition-opacity duration-200">
+            “Has the rare superpower of making any dull day 10x better.”
+          </p>
+        </div>
+
+        <button
+          id="nextTannuFactBtn"
+          type="button"
+          class="btn-bubbly shrink-0 px-5 py-2.5 rounded-xl font-playful font-semibold text-sm text-purple-900 bg-white border border-purple-200 hover:border-pink-300 shadow-xs cursor-pointer"
+        >
+          Tap for another Tannu fact ✨
+        </button>
+      </div>
+    </section>
+
+    <!-- ==================== 2. TANNU'S MINI ARCADE ==================== -->
+    <section class="pastel-card rounded-3xl p-6 sm:p-8">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+        <div>
+          <span class="text-xs font-bold uppercase tracking-wider text-purple-500">Quick Break Zone</span>
+          <h2 class="text-2xl sm:text-3xl font-bold text-[#2d233c]">Vibe Arcade 🎮</h2>
+        </div>
+
+        <!-- Game Switcher Tabs -->
+        <div class="inline-flex p-1.5 rounded-2xl bg-purple-100/70 border border-purple-200/60 self-start sm:self-auto">
+          <button
+            id="tabCatch"
+            onclick="switchGame('catch')"
+            class="px-4 py-2 rounded-xl text-sm font-bold transition-all bg-white text-purple-900 shadow-sm cursor-pointer"
+          >
+            ☁️ Catch Vibes
+          </button>
+          <button
+            id="tabMemory"
+            onclick="switchGame('memory')"
+            class="px-4 py-2 rounded-xl text-sm font-bold transition-all text-purple-700 hover:text-purple-950 cursor-pointer"
+          >
+            🃏 Aesthetic Match
+          </button>
+        </div>
+      </div>
+
+      <!-- GAME 1: CATCH THE GOOD VIBES -->
+      <div id="gameCatchContainer" class="space-y-4">
+        <div class="flex flex-wrap items-center justify-between gap-2 bg-gradient-to-r from-pink-50 to-purple-50 px-4 py-3 rounded-2xl border border-pink-100 text-sm font-semibold">
+          <div class="flex items-center gap-4">
+            <span>Score: <strong id="catchScore" class="text-pink-600 text-base">0</strong></span>
+            <span>Best: <strong id="catchBest" class="text-purple-600 text-base">0</strong></span>
+          </div>
+          <div class="flex items-center gap-2">
+            <span>Time:</span>
+            <span id="catchTimer" class="px-2.5 py-0.5 rounded-lg bg-white text-rose-500 font-bold shadow-xs">20s</span>
+          </div>
+        </div>
+
+        <!-- Game Canvas Wrapper -->
+        <div class="relative w-full h-72 sm:h-80 rounded-2xl overflow-hidden border-2 border-purple-200/80 bg-gradient-to-b from-indigo-50/80 via-pink-50/70 to-amber-50/80 select-none">
+          <canvas id="catchCanvas" class="w-full h-full block"></canvas>
+
+          <!-- Overlay Start / Game Over Screen -->
+          <div
+            id="catchOverlay"
+            class="absolute inset-0 bg-white/85 backdrop-blur-xs flex flex-col items-center justify-center p-6 text-center transition-opacity"
+          >
+            <div id="catchOverlayEmoji" class="text-4xl mb-2">☁️✨</div>
+            <h3 id="catchOverlayTitle" class="font-playful text-2xl font-bold text-slate-800 mb-1">
+              Catch the Good Vibes!
+            </h3>
+            <p id="catchOverlayDesc" class="text-sm text-slate-600 max-w-xs mb-5">
+              Drag the cloud (or use ◀ ▶ buttons) to catch ✨☕🎧🍓🦋 and dodge 💤🌧️!
+            </p>
+            <button
+              id="startCatchBtn"
+              class="btn-bubbly px-6 py-3 rounded-2xl font-playful font-semibold text-white bg-gradient-to-r from-purple-500 to-pink-500 shadow-md cursor-pointer"
+            >
+              Start 20s Round 🚀
+            </button>
+          </div>
+        </div>
+
+        <!-- Mobile / Easy Touch Controls below canvas -->
+        <div class="flex items-center justify-center gap-4 pt-1">
+          <button
+            id="moveLeftBtn"
+            aria-label="Move Left"
+            class="btn-bubbly w-16 h-12 rounded-2xl bg-purple-100 hover:bg-purple-200 text-purple-900 font-bold text-xl flex items-center justify-center shadow-xs select-none cursor-pointer"
+          >
+            ◀
+          </button>
+          <span class="text-xs text-slate-400 font-medium">Swipe on box or tap arrows</span>
+          <button
+            id="moveRightBtn"
+            aria-label="Move Right"
+            class="btn-bubbly w-16 h-12 rounded-2xl bg-purple-100 hover:bg-purple-200 text-purple-900 font-bold text-xl flex items-center justify-center shadow-xs select-none cursor-pointer"
+          >
+            ▶
+          </button>
+        </div>
+      </div>
+
+      <!-- GAME 2: MEMORY MATCH (AESTHETIC FLIP) -->
+      <div id="gameMemoryContainer" class="hidden space-y-4">
+        <div class="flex items-center justify-between bg-gradient-to-r from-emerald-50 to-purple-50 px-4 py-3 rounded-2xl border border-emerald-100 text-sm font-semibold">
+          <div class="flex items-center gap-4">
+            <span>Moves: <strong id="memoryMoves" class="text-purple-600 text-base">0</strong></span>
+            <span>Matches: <strong id="memoryMatches" class="text-emerald-600 text-base">0/6</strong></span>
+          </div>
+          <button
+            onclick="initMemoryGame()"
+            class="px-3 py-1 rounded-xl bg-white hover:bg-purple-50 text-purple-700 border border-purple-200 text-xs font-bold shadow-2xs cursor-pointer"
+          >
+            ↻ Shuffle
+          </button>
+        </div>
+
+        <!-- 4x3 Card Grid -->
+        <div id="memoryGrid" class="grid grid-cols-3 sm:grid-cols-4 gap-3 pt-1">
+          <!-- Cards injected via JS -->
+        </div>
+
+        <!-- Win Banner -->
+        <div id="memoryWinBanner" class="hidden text-center p-4 rounded-2xl bg-gradient-to-r from-pink-100 via-purple-100 to-emerald-100 border border-pink-200">
+          <p class="font-playful text-lg font-bold text-purple-900">
+            Memory Master! 🧠✨ You cleared it in <span id="finalMovesText">0</span> moves!
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== 3. SNAP & SOUNDTRACK SECTION ==================== -->
+    <section class="pastel-card rounded-3xl p-6 sm:p-8">
+      <div class="mb-6">
+        <span class="text-xs font-bold uppercase tracking-wider text-pink-500">Interactive Polaroid Booth</span>
+        <h2 class="text-2xl sm:text-3xl font-bold text-[#2d233c]">Snap &amp; Soundtrack 📸🎵</h2>
+        <p class="text-sm sm:text-base text-slate-600 mt-1">
+          Drop one of your favorite photos below, pick the mood, and unlock the soundtrack slot made for it.
+        </p>
+      </div>
+
+      <!-- Vibe / Mood Tag Selector -->
+      <div class="mb-6">
+        <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-2.5">
+          1. Pick the photo’s energy:
+        </label>
+        <div id="moodPills" class="flex flex-wrap gap-2">
+          <button type="button" data-mood="Main Character Energy ✨" class="mood-pill active px-3.5 py-2 rounded-full text-xs sm:text-sm font-semibold bg-pink-500 text-white shadow-xs transition cursor-pointer">
+            Main Character Energy ✨
+          </button>
+          <button type="button" data-mood="Cozy & Chill ☕" class="mood-pill px-3.5 py-2 rounded-full text-xs sm:text-sm font-semibold bg-white text-slate-700 border border-slate-200 hover:border-pink-300 transition cursor-pointer">
+            Cozy &amp; Chill ☕
+          </button>
+          <button type="button" data-mood="Unfiltered Chaos 🤪" class="mood-pill px-3.5 py-2 rounded-full text-xs sm:text-sm font-semibold bg-white text-slate-700 border border-slate-200 hover:border-pink-300 transition cursor-pointer">
+            Unfiltered Chaos 🤪
+          </button>
+          <button type="button" data-mood="Golden Hour 🌅" class="mood-pill px-3.5 py-2 rounded-full text-xs sm:text-sm font-semibold bg-white text-slate-700 border border-slate-200 hover:border-pink-300 transition cursor-pointer">
+            Golden Hour 🌅
+          </button>
+        </div>
+      </div>
+
+      <!-- Grid: Left = Polaroid Uploader | Right = Soundtrack Card -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+
+        <!-- Polaroid Frame -->
+        <div class="bg-white p-4 pb-6 rounded-2xl shadow-xl border border-slate-100 rotate-[-1deg] hover:rotate-0 transition-transform duration-300">
+          <label
+            for="photoInput"
+            class="relative block aspect-square w-full rounded-xl overflow-hidden bg-gradient-to-br from-pink-50 via-purple-50 to-amber-50 border-2 border-dashed border-pink-300 hover:border-pink-500 cursor-pointer group transition"
+          >
+            <!-- Empty Upload Prompt -->
+            <div id="uploadPlaceholder" class="absolute inset-0 flex flex-col items-center justify-center p-5 text-center">
+              <div class="w-14 h-14 rounded-2xl bg-white shadow-sm flex items-center justify-center text-2xl mb-3 group-hover:scale-110 transition-transform">
+                📷
+              </div>
+              <p class="font-playful font-semibold text-slate-800 text-base">Tap to add Tannu’s photo</p>
+              <p class="text-xs text-slate-500 mt-1">JPG, PNG, or WEBP • Stays privately on your device</p>
+            </div>
+
+            <!-- Uploaded Image Preview -->
+            <img
+              id="polaroidPreview"
+              src=""
+              alt="Tannu's Polaroid"
+              class="hidden w-full h-full object-cover"
+            />
+
+            <!-- Change Photo Badge (appears after upload) -->
+            <span
+              id="changePhotoBadge"
+              class="hidden absolute bottom-2.5 right-2.5 px-3 py-1 rounded-full bg-black/65 text-white text-xs font-medium backdrop-blur-xs"
+            >
+              Change photo ↻
+            </span>
+          </label>
+          <input id="photoInput" type="file" accept="image/*" class="hidden" />
+
+          <!-- Polaroid Handwritten Caption Area -->
+          <div class="mt-4 flex items-center justify-between px-1">
+            <div>
+              <p id="polaroidMoodCaption" class="font-playful font-semibold text-slate-800 text-base">
+                Main Character Energy ✨
+              </p>
+              <p id="polaroidDateStamp" class="text-xs text-slate-400">Tannu’s Archive • Edition 01</p>
+            </div>
+            <span class="text-xl">🎞️</span>
+          </div>
+        </div>
+
+        <!-- Music Player / Song Dedicator Card: revealed only after photo upload -->
+        <div id="songRevealCard" class="hidden bg-gradient-to-br from-[#2d233c] to-[#433359] text-white rounded-3xl p-6 shadow-xl relative overflow-hidden">
+          <!-- Subtle glow -->
+          <div class="absolute -top-10 -right-10 w-36 h-36 bg-pink-500/25 rounded-full blur-2xl pointer-events-none"></div>
+
+          <div class="flex items-center gap-4 mb-5">
+            <!-- Aesthetic Vinyl Record SVG -->
+            <div id="vinylDisc" class="relative w-16 h-16 shrink-0 rounded-full bg-neutral-900 border-2 border-neutral-700 flex items-center justify-center shadow-lg">
+              <div class="w-11 h-11 rounded-full border border-neutral-700/70 flex items-center justify-center">
+                <div class="w-6 h-6 rounded-full bg-gradient-to-tr from-pink-400 to-amber-300 flex items-center justify-center">
+                  <div class="w-1.5 h-1.5 rounded-full bg-neutral-900"></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="min-w-0">
+              <span class="inline-block px-2.5 py-0.5 rounded-full bg-white/15 text-pink-200 text-[11px] font-semibold uppercase tracking-wider mb-1">
+                Your Photo’s Soundtrack
+              </span>
+              <h3 id="songTitleDisplay" class="font-playful text-lg font-bold truncate">
+                Your Custom Song Title 🎶
+              </h3>
+              <p id="songArtistDisplay" class="text-xs text-purple-200 truncate">
+                Artist Name
+              </p>
+            </div>
+          </div>
+
+          <!-- A tiny dedication inspired by Afreen Afreen -->
+          <div class="mb-4 text-center rounded-2xl border border-pink-200/20 bg-white/5 px-4 py-4">
+            <p class="text-[10px] uppercase tracking-[.24em] text-pink-200 mb-2">a little dedication, just for you ✨</p>
+            <p class="song-quote text-sm sm:text-base text-pink-50 italic">“Chehra ik phool ki tarah sharab hai,<br>Chehra uska hai ya koi mehtaab hai”</p>
+            <p class="text-[11px] text-purple-200 mt-2">Some songs just feel like a compliment. ♡</p>
+          </div>
+
+          <!-- Status Box -->
+          <div class="bg-white/10 rounded-2xl p-3.5 mb-5 border border-white/10 text-xs sm:text-sm text-purple-100 leading-relaxed">
+            <p id="songStatusMessage">
+              Upload a photo on the left first to match the vibe, then hit play below! 🎧
+            </p>
+          </div>
+
+          <!-- Play / Open Song Button -->
+          <button
+            id="playSongBtn"
+            type="button"
+            class="btn-bubbly w-full py-3.5 px-5 rounded-2xl font-playful font-semibold text-base text-[#2d233c] bg-gradient-to-r from-pink-300 via-rose-200 to-amber-200 shadow-lg flex items-center justify-center gap-2 cursor-pointer"
+          >
+            <span id="playBtnIcon">▶️</span>
+            <span id="playBtnText">Play Tannu’s Song 🎧</span>
+          </button>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==================== 3.5. CUTE THANK YOU NOTE (BIRTHDAY WISH) ==================== -->
+    <section class="pastel-card rounded-3xl p-6 sm:p-8 relative overflow-hidden">
+      <!-- Subtle pastel background glow -->
+      <div class="pointer-events-none absolute -bottom-12 -left-12 w-40 h-40 bg-pink-200/40 rounded-full blur-2xl"></div>
+      <div class="pointer-events-none absolute -top-12 -right-12 w-40 h-40 bg-purple-200/40 rounded-full blur-2xl"></div>
+
+      <div class="relative z-10 flex flex-col sm:flex-row items-center gap-6 sm:gap-8">
+        <!-- Cute Cartoon Cat Holding a Bouquet (Guldasta) SVG -->
+        <div
+          onclick="triggerCuteConfetti()"
+          title="Tap the kitty for confetti! 🌸"
+          class="shrink-0 w-44 h-44 sm:w-48 sm:h-48 rounded-3xl bg-gradient-to-b from-pink-50 via-purple-50 to-amber-50 border-2 border-white shadow-md flex items-center justify-center p-2 cursor-pointer btn-bubbly"
+        >
+          <svg viewBox="0 0 220 220" class="w-full h-full overflow-visible" xmlns="http://www.w3.org/2000/svg">
+            <!-- Floating Hearts & Sparkles -->
+            <g class="animate-float">
+              <path d="M40 48 C40 43, 33 43, 33 48 C33 53, 40 57, 40 57 C40 57, 47 53, 47 48 C47 43, 40 43, 40 48 Z" fill="#ff758f" />
+              <circle cx="178" cy="42" r="3" fill="#ffd166" />
+              <path d="M185 62 L187 67 L192 69 L187 71 L185 76 L183 71 L178 69 L183 67 Z" fill="#c77dff" />
+            </g>
+            <g class="animate-float-delayed">
+              <path d="M172 102 C172 98, 166 98, 166 102 C166 106, 172 110, 172 110 C172 110, 178 106, 178 102 C178 98, 172 98, 172 102 Z" fill="#ff8fa3" />
+              <path d="M36 96 L38 100 L42 102 L38 104 L36 108 L34 104 L30 102 L34 100 Z" fill="#ffb703" />
+            </g>
+
+            <!-- Cute Cat Tail -->
+            <path d="M144 176 Q175 168 172 145 Q170 132 160 138" fill="none" stroke="#f4a261" stroke-width="11" stroke-linecap="round" />
+
+            <!-- Cat Body -->
+            <ellipse cx="110" cy="166" rx="42" ry="36" fill="#fff8f0" stroke="#e5c3a6" stroke-width="2.5" />
+            <!-- Belly Patch -->
+            <ellipse cx="110" cy="170" rx="25" ry="22" fill="#ffedd8" />
+
+            <!-- Cat Left & Right Ears -->
+            <polygon points="68,78 62,36 96,58" fill="#fff8f0" stroke="#e5c3a6" stroke-width="2.5" stroke-linejoin="round" />
+            <polygon points="72,72 68,45 90,60" fill="#ffb5c2" />
+
+            <polygon points="152,78 158,36 124,58" fill="#fff8f0" stroke="#e5c3a6" stroke-width="2.5" stroke-linejoin="round" />
+            <polygon points="148,72 152,45 130,60" fill="#ffb5c2" />
+
+            <!-- Cute Ginger Patch on Forehead -->
+            <path d="M98 54 Q110 49 122 54 Q116 68 110 68 Q104 68 98 54 Z" fill="#f4a261" opacity="0.85" />
+
+            <!-- Cat Head -->
+            <ellipse cx="110" cy="92" rx="48" ry="40" fill="#fff8f0" stroke="#e5c3a6" stroke-width="2.5" />
+
+            <!-- Happy Closed Smiling Eyes (^ ^) -->
+            <path d="M84 88 Q91 79 98 88" fill="none" stroke="#2d233c" stroke-width="3.2" stroke-linecap="round" />
+            <path d="M122 88 Q129 79 136 88" fill="none" stroke="#2d233c" stroke-width="3.2" stroke-linecap="round" />
+
+            <!-- Rosy Cheeks -->
+            <ellipse cx="78" cy="98" rx="8" ry="5" fill="#ff8fa3" opacity="0.55" />
+            <ellipse cx="142" cy="98" rx="8" ry="5" fill="#ff8fa3" opacity="0.55" />
+
+            <!-- Cute Nose & Cat Mouth -->
+            <polygon points="106,96 114,96 110,101" fill="#ff758f" />
+            <path d="M102 104 Q106 109 110 103 Q114 109 118 104" fill="none" stroke="#2d233c" stroke-width="2.4" stroke-linecap="round" />
+
+            <!-- Whiskers -->
+            <line x1="54" y1="92" x2="69" y2="94" stroke="#cbb29d" stroke-width="2" stroke-linecap="round" />
+            <line x1="54" y1="101" x2="69" y2="100" stroke="#cbb29d" stroke-width="2" stroke-linecap="round" />
+            <line x1="166" y1="92" x2="151" y2="94" stroke="#cbb29d" stroke-width="2" stroke-linecap="round" />
+            <line x1="166" y1="101" x2="151" y2="100" stroke="#cbb29d" stroke-width="2" stroke-linecap="round" />
+
+            <!-- ================= COLORFUL BOUQUET (GULDASTA) ================= -->
+            <!-- Bouquet Paper Cone Wrap -->
+            <polygon points="84,136 136,136 116,184 104,184" fill="#fde2e4" stroke="#f4acb7" stroke-width="2" stroke-linejoin="round" />
+            <polygon points="92,136 128,136 114,184 106,184" fill="#fff1f2" />
+
+            <!-- Green Leaves -->
+            <ellipse cx="86" cy="128" rx="11" ry="6" transform="rotate(-30 86 128)" fill="#74c69d" />
+            <ellipse cx="134" cy="128" rx="11" ry="6" transform="rotate(30 134 128)" fill="#74c69d" />
+            <ellipse cx="110" cy="118" rx="8" ry="12" fill="#52b788" />
+
+            <!-- Flower 1 (Pink Blossom - Left) -->
+            <g transform="translate(92, 130)">
+              <circle cx="0" cy="-6" r="6" fill="#ff758f" />
+              <circle cx="6" cy="0" r="6" fill="#ff758f" />
+              <circle cx="0" cy="6" r="6" fill="#ff758f" />
+              <circle cx="-6" cy="0" r="6" fill="#ff758f" />
+              <circle cx="0" cy="0" r="4.5" fill="#ffd166" />
+            </g>
+
+            <!-- Flower 2 (Lavender Blossom - Right) -->
+            <g transform="translate(128, 130)">
+              <circle cx="0" cy="-6" r="6" fill="#c77dff" />
+              <circle cx="6" cy="0" r="6" fill="#c77dff" />
+              <circle cx="0" cy="6" r="6" fill="#c77dff" />
+              <circle cx="-6" cy="0" r="6" fill="#c77dff" />
+              <circle cx="0" cy="0" r="4.5" fill="#ffd166" />
+            </g>
+
+            <!-- Flower 3 (Sunny Sunflower - Top Center) -->
+            <g transform="translate(110, 122)">
+              <circle cx="0" cy="-7" r="6.5" fill="#ffb703" />
+              <circle cx="7" cy="0" r="6.5" fill="#ffb703" />
+              <circle cx="0" cy="7" r="6.5" fill="#ffb703" />
+              <circle cx="-7" cy="0" r="6.5" fill="#ffb703" />
+              <circle cx="0" cy="0" r="5" fill="#fb8500" />
+            </g>
+
+            <!-- Cute Ribbon Bow on Bouquet -->
+            <path d="M110 164 L98 157 L101 170 Z" fill="#ff4d6d" />
+            <path d="M110 164 L122 157 L119 170 Z" fill="#ff4d6d" />
+            <circle cx="110" cy="164" r="3.5" fill="#fff0f3" />
+
+            <!-- Cat Little Paws Holding the Bouquet -->
+            <ellipse cx="86" cy="154" rx="11" ry="8" transform="rotate(-15 86 154)" fill="#fff8f0" stroke="#e5c3a6" stroke-width="2.2" />
+            <ellipse cx="134" cy="154" rx="11" ry="8" transform="rotate(15 134 154)" fill="#fff8f0" stroke="#e5c3a6" stroke-width="2.2" />
+          </svg>
+        </div>
+
+        <!-- Thank You Message Content -->
+        <div class="text-center sm:text-left space-y-3">
+          <div class="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-pink-100/85 border border-pink-200 text-xs font-bold text-pink-700">
+            <span>💐</span>
+            <span>Special Thank You Note</span>
+          </div>
+
+          <h2 class="text-2xl sm:text-3xl font-bold text-[#2d233c]">
+            Thank you so much, Tannu! 🎂✨
+          </h2>
+
+          <p class="text-sm sm:text-base text-slate-600 leading-relaxed">
+            Seriously, thank you for wishing me such a sweet and lovely <strong class="text-[#2d233c] font-semibold">Happy Birthday</strong>! Your wish genuinely made my day way brighter and put the biggest smile on my face.
+          </p>
+
+          <p class="font-playful text-sm sm:text-base font-semibold text-purple-800 bg-white/75 inline-block px-4 py-2 rounded-2xl border border-purple-100 shadow-2xs">
+            Ye chhota sa guldasta meri taraf se as a thank you! 🌸🐾
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== 4. FOOTER ==================== -->
+    <footer class="text-center pb-6 pt-2">
+      <p class="text-sm font-medium text-slate-500">
+        Made just to make Tannu smile • 100% good vibes only ✨
+      </p>
+    </footer>
+
+  </main>
+
+  <!-- ==================== JAVASCRIPT ==================== -->
+  <script>
+    /**
+     * =========================================================================
+     * 🎵 EASY SONG CONFIGURATION (EDIT THIS LATER!)
+     * =========================================================================
+     * Leave `songLink` as "" (blank) for now.
+     * Whenever you're ready to add the song for Tannu's photo, just paste your
+     * song file path (e.g. "song.mp3") or Spotify/YouTube URL inside `songLink`!
+     */
+    const SONG_CONFIG = {
+      songTitle: "Afreen Afreen", // e.g., "Golden Hour" or "Kesariya"
+      artistName: "A little song for Tannu ♡",           // e.g., "JVKE"
+      songLink: "AfreenAfreen.mp3"                         // <-- ADD YOUR SONG PATH HERE, e.g. "song.mp3" (or paste a song URL)
+    };
+
+    /**
+     * =========================================================================
+     * ✨ EASY "GOOD THINGS ABOUT TANNU" CONFIGURATION (CUSTOMIZE ANY LINE!)
+     * =========================================================================
+     */
+    const TANNU_GOOD_THINGS = [
+      {
+        emoji: "🌙",
+        title: "Effortless Vibe",
+        description: "Somehow makes even random late-night chats actually fun.",
+        gradient: "from-pink-100/90 to-rose-50/90",
+        badge: "Tap to flip ✨"
+      },
+      {
+        emoji: "👑",
+        title: "Main Character Energy",
+        description: "10/10 humor, zero boring moments, and elite taste.",
+        gradient: "from-purple-100/90 to-indigo-50/90",
+        badge: "Tap to flip 💫"
+      },
+      {
+        emoji: "☀️",
+        title: "Unmatched Smile",
+        description: "Honestly deserves its own appreciation post.",
+        gradient: "from-amber-100/90 to-orange-50/90",
+        badge: "Tap to flip 🌸"
+      },
+      {
+        emoji: "💌",
+        title: "The 'Tannu' Factor",
+        description: "Officially my favorite notification of the day.",
+        gradient: "from-emerald-100/90 to-teal-50/90",
+        badge: "Tap to flip 🦋"
+      }
+    ];
+
+    const EXTRA_TANNU_FACTS = [
+      "“Has the rare superpower of making any dull day 10x better.”",
+      "“Effortlessly cool without even trying—honestly unfair.”",
+      "“Brings top-tier energy to every single conversation.”",
+      "“Aesthetic taste + great sense of humor = unbeatable combo.”",
+      "“Definitely the coolest person I've met online.”"
+    ];
+
+    // =========================================================================
+    // 1. HERO VIBE BOOST & CONFETTI
+    // =========================================================================
+    const vibeQuotes = [
+      "“Certified 10/10 conversation starter ✨”",
+      "“Official VIP of effortless good vibes 👑”",
+      "“Too cool for boring small talk ☕”",
+      "“Main character energy without even trying 🌟”",
+      "“Elite playlist taste & top-tier humor 🎧”",
+      "“100% passes every vibe check with flying colors 🦋”"
+    ];
+    let currentQuoteIndex = 0;
+
+    const vibeQuoteEl = document.getElementById("vibeQuote");
+    const vibeBoostBtn = document.getElementById("vibeBoostBtn");
+
+    function triggerCuteConfetti() {
+      if (typeof confetti === "function") {
+        confetti({
+          particleCount: 55,
+          spread: 65,
+          origin: { y: 0.65 },
+          colors: ["#ff758f", "#c77dff", "#80ed99", "#ffd166"]
+        });
+      }
+    }
+
+    vibeBoostBtn.addEventListener("click", () => {
+      currentQuoteIndex = (currentQuoteIndex + 1) % vibeQuotes.length;
+      vibeQuoteEl.style.opacity = "0";
+      setTimeout(() => {
+        vibeQuoteEl.textContent = vibeQuotes[currentQuoteIndex];
+        vibeQuoteEl.style.opacity = "1";
+      }, 150);
+      triggerCuteConfetti();
+    });
+
+    // =========================================================================
+    // 1.5. RENDER "A FEW GOOD THINGS ABOUT TANNU" CARDS & ROTATING FACTS
+    // =========================================================================
+    const tannuGoodThingsGrid = document.getElementById("tannuGoodThingsGrid");
+    const extraTannuFactText = document.getElementById("extraTannuFactText");
+    const nextTannuFactBtn = document.getElementById("nextTannuFactBtn");
+    let extraFactIndex = 0;
+
+    function renderGoodThingsCards() {
+      if (!tannuGoodThingsGrid) return;
+      tannuGoodThingsGrid.innerHTML = "";
+
+      TANNU_GOOD_THINGS.forEach((item) => {
+        const cardBtn = document.createElement("button");
+        cardBtn.type = "button";
+        cardBtn.className = "perspective-1000 h-36 sm:h-40 w-full text-left cursor-pointer focus:outline-none group";
+
+        cardBtn.innerHTML = `
+          <div class="tannu-card-inner relative w-full h-full transform-style-3d">
+            <!-- Front Side -->
+            <div class="backface-hidden absolute inset-0 rounded-2xl bg-gradient-to-br ${item.gradient} border-2 border-white p-5 shadow-sm flex flex-col justify-between group-hover:shadow-md transition-shadow">
+              <div class="flex items-center justify-between">
+                <span class="w-10 h-10 rounded-xl bg-white/90 shadow-2xs flex items-center justify-center text-xl">
+                  ${item.emoji}
+                </span>
+                <span class="text-[11px] font-bold px-2.5 py-1 rounded-full bg-white/80 text-slate-600">
+                  ${item.badge}
+                </span>
+              </div>
+              <div>
+                <h3 class="font-playful text-lg sm:text-xl font-bold text-[#2d233c]">
+                  ${item.title}
+                </h3>
+                <p class="text-xs text-slate-500 mt-0.5">Tap card to read note →</p>
+              </div>
+            </div>
+
+            <!-- Back Side (Revealed on Tap) -->
+            <div class="backface-hidden rotate-y-180 absolute inset-0 rounded-2xl bg-white border-2 border-pink-200 p-5 shadow-md flex flex-col justify-between">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-bold uppercase tracking-wider text-pink-500">${item.title}</span>
+                <span class="text-base">${item.emoji}</span>
+              </div>
+              <p class="font-playful text-sm sm:text-base font-semibold text-slate-800 leading-snug">
+                “${item.description}”
+              </p>
+              <span class="text-[11px] text-slate-400">Tap again to flip back ↻</span>
+            </div>
+          </div>
+        `;
+
+        cardBtn.addEventListener("click", () => {
+          const inner = cardBtn.querySelector(".tannu-card-inner");
+          const isFlipped = inner.classList.toggle("rotate-y-180");
+          if (isFlipped && typeof confetti === "function") {
+            confetti({
+              particleCount: 22,
+              spread: 45,
+              origin: { y: 0.55 },
+              colors: ["#ff758f", "#c77dff", "#80ed99"]
+            });
+          }
+        });
+
+        tannuGoodThingsGrid.appendChild(cardBtn);
+      });
+    }
+
+    if (nextTannuFactBtn) {
+      nextTannuFactBtn.addEventListener("click", () => {
+        extraFactIndex = (extraFactIndex + 1) % EXTRA_TANNU_FACTS.length;
+        extraTannuFactText.style.opacity = "0";
+        setTimeout(() => {
+          extraTannuFactText.textContent = EXTRA_TANNU_FACTS[extraFactIndex];
+          extraTannuFactText.style.opacity = "1";
+        }, 160);
+        triggerCuteConfetti();
+      });
+    }
+
+    // =========================================================================
+    // 2. ARCADE TAB SWITCHER
+    // =========================================================================
+    const tabCatch = document.getElementById("tabCatch");
+    const tabMemory = document.getElementById("tabMemory");
+    const gameCatchContainer = document.getElementById("gameCatchContainer");
+    const gameMemoryContainer = document.getElementById("gameMemoryContainer");
+
+    function switchGame(game) {
+      if (game === "catch") {
+        gameCatchContainer.classList.remove("hidden");
+        gameMemoryContainer.classList.add("hidden");
+        tabCatch.className = "px-4 py-2 rounded-xl text-sm font-bold transition-all bg-white text-purple-900 shadow-sm cursor-pointer";
+        tabMemory.className = "px-4 py-2 rounded-xl text-sm font-bold transition-all text-purple-700 hover:text-purple-950 cursor-pointer";
+        resizeCatchCanvas();
+      } else {
+        gameCatchContainer.classList.add("hidden");
+        gameMemoryContainer.classList.remove("hidden");
+        tabMemory.className = "px-4 py-2 rounded-xl text-sm font-bold transition-all bg-white text-purple-900 shadow-sm cursor-pointer";
+        tabCatch.className = "px-4 py-2 rounded-xl text-sm font-bold transition-all text-purple-700 hover:text-purple-950 cursor-pointer";
+      }
+    }
+
+    // =========================================================================
+    // 3. GAME 1: CATCH THE GOOD VIBES (CANVAS ARCADE)
+    // =========================================================================
+    const canvas = document.getElementById("catchCanvas");
+    const ctx = canvas.getContext("2d");
+    const catchOverlay = document.getElementById("catchOverlay");
+    const catchOverlayEmoji = document.getElementById("catchOverlayEmoji");
+    const catchOverlayTitle = document.getElementById("catchOverlayTitle");
+    const catchOverlayDesc = document.getElementById("catchOverlayDesc");
+    const startCatchBtn = document.getElementById("startCatchBtn");
+    const catchScoreEl = document.getElementById("catchScore");
+    const catchBestEl = document.getElementById("catchBest");
+    const catchTimerEl = document.getElementById("catchTimer");
+
+    let catchRunning = false;
+    let catchScore = 0;
+    let catchBest = 0;
+    let timeLeft = 20;
+    let timerInterval = null;
+    let spawnInterval = null;
+    let animFrameId = null;
+
+    const goodIcons = ["✨", "☕", "🎧", "🍓", "🦋"];
+    const badIcons = ["💤", "🌧️"];
+
+    const player = {
+      x: 150,
+      y: 230,
+      width: 68,
+      height: 36,
+      speed: 7
+    };
+
+    let fallingItems = [];
+    let floatingPopups = [];
+    let keysPressed = { left: false, right: false };
+
+    function resizeCatchCanvas() {
+      const rect = canvas.parentElement.getBoundingClientRect();
+      if (rect.width === 0 || rect.height === 0) return;
+      canvas.width = rect.width;
+      canvas.height = rect.height;
+      player.y = canvas.height - 46;
+      player.x = Math.min(Math.max(player.x, 10), canvas.width - player.width - 10);
+      drawCatchIdle();
+    }
+
+    function drawCatchIdle() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      drawPlayerCloud();
+    }
+
+    function drawPlayerCloud() {
+      const cx = player.x + player.width / 2;
+      const cy = player.y + player.height / 2;
+
+      // Soft pastel cloud basket
+      ctx.save();
+      ctx.fillStyle = "#ffffff";
+      ctx.shadowColor = "rgba(168, 85, 247, 0.25)";
+      ctx.shadowBlur = 10;
+      ctx.shadowOffsetY = 4;
+
+      ctx.beginPath();
+      ctx.arc(cx - 18, cy + 4, 15, 0, Math.PI * 2);
+      ctx.arc(cx, cy - 3, 19, 0, Math.PI * 2);
+      ctx.arc(cx + 18, cy + 4, 15, 0, Math.PI * 2);
+      ctx.roundRect(cx - 24, cy + 2, 48, 16, 8);
+      ctx.fill();
+
+      // Cute happy face on cloud
+      ctx.shadowBlur = 0;
+      ctx.fillStyle = "#2d233c";
+      ctx.beginPath();
+      ctx.arc(cx - 7, cy + 4, 2.2, 0, Math.PI * 2);
+      ctx.arc(cx + 7, cy + 4, 2.2, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.strokeStyle = "#ff758f";
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.arc(cx, cy + 6, 4.5, 0.1 * Math.PI, 0.9 * Math.PI);
+      ctx.stroke();
+      ctx.restore();
+    }
+
+    function spawnFallingItem() {
+      if (!catchRunning) return;
+      const isGood = Math.random() < 0.76;
+      const icon = isGood
+        ? goodIcons[Math.floor(Math.random() * goodIcons.length)]
+        : badIcons[Math.floor(Math.random() * badIcons.length)];
+
+      fallingItems.push({
+        x: 24 + Math.random() * (canvas.width - 48),
+        y: -24,
+        radius: 18,
+        speed: 2.5 + Math.random() * 2.2,
+        icon,
+        isGood
+      });
+    }
+
+    function startCatchGame() {
+      resizeCatchCanvas();
+      catchScore = 0;
+      timeLeft = 20;
+      fallingItems = [];
+      floatingPopups = [];
+      player.x = canvas.width / 2 - player.width / 2;
+
+      catchScoreEl.textContent = "0";
+      catchTimerEl.textContent = "20s";
+      catchOverlay.classList.add("opacity-0", "pointer-events-none");
+      catchRunning = true;
+
+      clearInterval(timerInterval);
+      clearInterval(spawnInterval);
+      cancelAnimationFrame(animFrameId);
+
+      timerInterval = setInterval(() => {
+        timeLeft--;
+        catchTimerEl.textContent = `${timeLeft}s`;
+        if (timeLeft <= 0) {
+          endCatchGame();
+        }
+      }, 1000);
+
+      spawnInterval = setInterval(spawnFallingItem, 520);
+      spawnFallingItem();
+      updateCatchLoop();
+    }
+
+    function endCatchGame() {
+      catchRunning = false;
+      clearInterval(timerInterval);
+      clearInterval(spawnInterval);
+      cancelAnimationFrame(animFrameId);
+
+      if (catchScore > catchBest) {
+        catchBest = catchScore;
+        catchBestEl.textContent = catchBest;
+      }
+
+      let rankTitle = "Certified Vibe Queen 👑";
+      let rankEmoji = "👑✨";
+      if (catchScore < 50) {
+        rankTitle = "Warm-Up Champ ☕";
+        rankEmoji = "☕✨";
+      } else if (catchScore >= 110) {
+        rankTitle = "Unstoppable Aura 1000/10 🦋";
+        rankEmoji = "🦋💖";
+      }
+
+      catchOverlayEmoji.textContent = rankEmoji;
+      catchOverlayTitle.textContent = rankTitle;
+      catchOverlayDesc.textContent = `You scored ${catchScore} points! Ready to beat your record?`;
+      startCatchBtn.textContent = "Play Again 🔄";
+      catchOverlay.classList.remove("opacity-0", "pointer-events-none");
+
+      if (catchScore >= 60) triggerCuteConfetti();
+    }
+
+    function updateCatchLoop() {
+      if (!catchRunning) return;
+
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Move player via buttons/keyboard
+      if (keysPressed.left) player.x -= player.speed;
+      if (keysPressed.right) player.x += player.speed;
+      player.x = Math.max(6, Math.min(canvas.width - player.width - 6, player.x));
+
+      // Update & draw falling items
+      ctx.font = "26px sans-serif";
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+
+      for (let i = fallingItems.length - 1; i >= 0; i--) {
+        const item = fallingItems[i];
+        item.y += item.speed;
+        ctx.fillText(item.icon, item.x, item.y);
+
+        // Collision check with player cloud
+        const hitX = item.x > player.x - 8 && item.x < player.x + player.width + 8;
+        const hitY = item.y + 12 > player.y && item.y - 12 < player.y + player.height;
+
+        if (hitX && hitY) {
+          if (item.isGood) {
+            catchScore += 10;
+            floatingPopups.push({ x: item.x, y: player.y - 10, text: "+10 ✨", color: "#db2777", life: 28 });
+          } else {
+            catchScore = Math.max(0, catchScore - 5);
+            floatingPopups.push({ x: item.x, y: player.y - 10, text: "-5 💤", color: "#64748b", life: 28 });
+          }
+          catchScoreEl.textContent = catchScore;
+          fallingItems.splice(i, 1);
+          continue;
+        }
+
+        if (item.y > canvas.height + 30) {
+          fallingItems.splice(i, 1);
+        }
+      }
+
+      // Draw floating score popups
+      ctx.font = "bold 14px 'Fredoka', sans-serif";
+      for (let i = floatingPopups.length - 1; i >= 0; i--) {
+        const p = floatingPopups[i];
+        p.y -= 1.2;
+        p.life--;
+        ctx.fillStyle = p.color;
+        ctx.fillText(p.text, p.x, p.y);
+        if (p.life <= 0) floatingPopups.splice(i, 1);
+      }
+
+      drawPlayerCloud();
+      animFrameId = requestAnimationFrame(updateCatchLoop);
+    }
+
+    // Touch / Mouse Drag directly on Canvas
+    function movePlayerToPointer(clientX) {
+      const rect = canvas.getBoundingClientRect();
+      const relX = clientX - rect.left;
+      player.x = Math.max(6, Math.min(canvas.width - player.width - 6, relX - player.width / 2));
+    }
+
+    canvas.addEventListener("touchmove", (e) => {
+      if (!catchRunning) return;
+      e.preventDefault();
+      movePlayerToPointer(e.touches[0].clientX);
+    }, { passive: false });
+
+    canvas.addEventListener("touchstart", (e) => {
+      if (!catchRunning) return;
+      movePlayerToPointer(e.touches[0].clientX);
+    }, { passive: true });
+
+    canvas.addEventListener("mousemove", (e) => {
+      if (!catchRunning) return;
+      movePlayerToPointer(e.clientX);
+    });
+
+    // Keyboard & On-screen Arrow Controls
+    window.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowLeft") keysPressed.left = true;
+      if (e.key === "ArrowRight") keysPressed.right = true;
+    });
+    window.addEventListener("keyup", (e) => {
+      if (e.key === "ArrowLeft") keysPressed.left = false;
+      if (e.key === "ArrowRight") keysPressed.right = false;
+    });
+
+    const leftBtn = document.getElementById("moveLeftBtn");
+    const rightBtn = document.getElementById("moveRightBtn");
+
+    ["mousedown", "touchstart"].forEach((evt) => {
+      leftBtn.addEventListener(evt, (e) => { e.preventDefault(); keysPressed.left = true; });
+      rightBtn.addEventListener(evt, (e) => { e.preventDefault(); keysPressed.right = true; });
+    });
+    ["mouseup", "mouseleave", "touchend"].forEach((evt) => {
+      leftBtn.addEventListener(evt, () => { keysPressed.left = false; });
+      rightBtn.addEventListener(evt, () => { keysPressed.right = false; });
+    });
+
+    startCatchBtn.addEventListener("click", startCatchGame);
+
+    // =========================================================================
+    // 4. GAME 2: MEMORY MATCH (AESTHETIC FLIP)
+    // =========================================================================
+    const memoryEmojis = ["🌸", "🎧", "🧋", "✨", "🦋", "🌙"];
+    const memoryGrid = document.getElementById("memoryGrid");
+    const memoryMovesEl = document.getElementById("memoryMoves");
+    const memoryMatchesEl = document.getElementById("memoryMatches");
+    const memoryWinBanner = document.getElementById("memoryWinBanner");
+    const finalMovesText = document.getElementById("finalMovesText");
+
+    let flippedCards = [];
+    let matchedCount = 0;
+    let movesCount = 0;
+    let lockBoard = false;
+
+    function initMemoryGame() {
+      memoryGrid.innerHTML = "";
+      memoryWinBanner.classList.add("hidden");
+      flippedCards = [];
+      matchedCount = 0;
+      movesCount = 0;
+      lockBoard = false;
+      memoryMovesEl.textContent = "0";
+      memoryMatchesEl.textContent = "0/6";
+
+      const deck = [...memoryEmojis, ...memoryEmojis]
+        .sort(() => Math.random() - 0.5);
+
+      deck.forEach((emoji) => {
+        const card = document.createElement("button");
+        card.type = "button";
+        card.dataset.emoji = emoji;
+        card.className = "perspective-1000 h-20 sm:h-24 w-full cursor-pointer focus:outline-none";
+
+        card.innerHTML = `
+          <div class="card-inner relative w-full h-full transform-style-3d">
+            <!-- Card Back (Face Down) -->
+            <div class="backface-hidden absolute inset-0 rounded-2xl bg-gradient-to-br from-pink-200 via-purple-200 to-indigo-200 border-2 border-white shadow-sm flex items-center justify-center text-xl font-bold text-purple-700">
+              ✦
+            </div>
+            <!-- Card Front (Emoji) -->
+            <div class="backface-hidden rotate-y-180 absolute inset-0 rounded-2xl bg-white border-2 border-pink-200 shadow-md flex items-center justify-center text-3xl sm:text-4xl">
+              ${emoji}
+            </div>
+          </div>
+        `;
+
+        card.addEventListener("click", () => handleCardFlip(card));
+        memoryGrid.appendChild(card);
+      });
+    }
+
+    function handleCardFlip(card) {
+      if (lockBoard) return;
+      const inner = card.querySelector(".card-inner");
+      if (inner.classList.contains("rotate-y-180")) return;
+
+      inner.classList.add("rotate-y-180");
+      flippedCards.push(card);
+
+      if (flippedCards.length === 2) {
+        movesCount++;
+        memoryMovesEl.textContent = movesCount;
+        checkForMemoryMatch();
+      }
+    }
+
+    function checkForMemoryMatch() {
+      const [card1, card2] = flippedCards;
+      const isMatch = card1.dataset.emoji === card2.dataset.emoji;
+
+      if (isMatch) {
+        matchedCount++;
+        memoryMatchesEl.textContent = `${matchedCount}/6`;
+        flippedCards = [];
+
+        if (matchedCount === memoryEmojis.length) {
+          finalMovesText.textContent = movesCount;
+          memoryWinBanner.classList.remove("hidden");
+          triggerCuteConfetti();
+        }
+      } else {
+        lockBoard = true;
+        setTimeout(() => {
+          card1.querySelector(".card-inner").classList.remove("rotate-y-180");
+          card2.querySelector(".card-inner").classList.remove("rotate-y-180");
+          flippedCards = [];
+          lockBoard = false;
+        }, 700);
+      }
+    }
+
+    // =========================================================================
+    // 5. SNAP & SOUNDTRACK SECTION (PHOTO UPLOAD + CUSTOM SONG LINK SLOT)
+    // =========================================================================
+    const photoInput = document.getElementById("photoInput");
+    const uploadPlaceholder = document.getElementById("uploadPlaceholder");
+    const polaroidPreview = document.getElementById("polaroidPreview");
+    const changePhotoBadge = document.getElementById("changePhotoBadge");
+    const moodPills = document.querySelectorAll(".mood-pill");
+    const polaroidMoodCaption = document.getElementById("polaroidMoodCaption");
+    const polaroidDateStamp = document.getElementById("polaroidDateStamp");
+
+    const vinylDisc = document.getElementById("vinylDisc");
+    const songTitleDisplay = document.getElementById("songTitleDisplay");
+    const songArtistDisplay = document.getElementById("songArtistDisplay");
+    const songStatusMessage = document.getElementById("songStatusMessage");
+    const playSongBtn = document.getElementById("playSongBtn");
+    const playBtnIcon = document.getElementById("playBtnIcon");
+    const playBtnText = document.getElementById("playBtnText");
+
+    let hasUploadedPhoto = false;
+    const songRevealCard = document.getElementById("songRevealCard");
+
+    // Set today's subtle Polaroid date stamp
+    if (polaroidDateStamp) {
+      const todayStr = new Date().toLocaleDateString("en-US", {
+        month: "short",
+        day: "numeric",
+        year: "numeric"
+      });
+      polaroidDateStamp.textContent = `Tannu’s Archive • ${todayStr}`;
+    }
+
+    // Populate song display from SONG_CONFIG if customized
+    if (SONG_CONFIG.songLink && SONG_CONFIG.songLink.trim() !== "") {
+      songTitleDisplay.textContent = SONG_CONFIG.songTitle || "Tannu's Custom Track 🎶";
+      songArtistDisplay.textContent = SONG_CONFIG.artistName || "Handpicked For You";
+    }
+
+    // Mood Pill Switcher
+    moodPills.forEach((pill) => {
+      pill.addEventListener("click", () => {
+        moodPills.forEach((p) => {
+          p.className = "mood-pill px-3.5 py-2 rounded-full text-xs sm:text-sm font-semibold bg-white text-slate-700 border border-slate-200 hover:border-pink-300 transition cursor-pointer";
+        });
+        pill.className = "mood-pill active px-3.5 py-2 rounded-full text-xs sm:text-sm font-semibold bg-pink-500 text-white shadow-xs transition cursor-pointer";
+        polaroidMoodCaption.textContent = pill.dataset.mood;
+      });
+    });
+
+    // Photo Upload Handler (Client-side preview only)
+    photoInput.addEventListener("change", (e) => {
+      const file = e.target.files && e.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        polaroidPreview.src = event.target.result;
+        polaroidPreview.classList.remove("hidden");
+        uploadPlaceholder.classList.add("hidden");
+        changePhotoBadge.classList.remove("hidden");
+        hasUploadedPhoto = true;
+
+        // Reveal the entire music card only once her photo is ready.
+        songRevealCard.classList.remove("hidden");
+        songRevealCard.classList.remove("soundtrack-revealed");
+        void songRevealCard.offsetWidth;
+        songRevealCard.classList.add("soundtrack-revealed");
+        vinylDisc.classList.add("vinyl-spinning");
+        triggerCuteConfetti();
+
+        const hasCustomLink = SONG_CONFIG.songLink && SONG_CONFIG.songLink.trim() !== "";
+        if (hasCustomLink) {
+          songStatusMessage.textContent = "Vibe matched! Tap the button below to listen to the song picked for this photo ✨";
+        } else {
+          songStatusMessage.textContent = "Photo locked in! ✨ Tap below to check the soundtrack status for this snap.";
+        }
+      };
+      reader.readAsDataURL(file);
+    });
+
+    // Play Song Button Handler
+    playSongBtn.addEventListener("click", () => {
+      if (!hasUploadedPhoto) return;
+      vinylDisc.classList.add("vinyl-spinning");
+      const cleanLink = (SONG_CONFIG.songLink || "").trim();
+
+      if (cleanLink !== "") {
+        // Play local/direct audio files; open streaming links in a new tab.
+        songStatusMessage.textContent = `Opening "${SONG_CONFIG.songTitle}" for you... 🎶`;
+        playBtnIcon.textContent = "🎶";
+        playBtnText.textContent = "Playing Vibe...";
+        if (/\.(mp3|wav|ogg|m4a|aac)(?:[?#].*)?$/i.test(cleanLink)) {
+          if (!window.tannuSongAudio) window.tannuSongAudio = new Audio();
+          const audio = window.tannuSongAudio;
+          if (audio.src !== new URL(cleanLink, document.baseURI).href) audio.src = cleanLink;
+          if (audio.paused) {
+            audio.play().then(() => { playBtnText.textContent = "Pause Song ⏸"; })
+              .catch(() => { songStatusMessage.textContent = "Couldn't play this audio. Check the song file path."; });
+          } else {
+            audio.pause();
+            playBtnText.textContent = "Play Tannu’s Song 🎧";
+          }
+          audio.onended = () => { playBtnText.textContent = "Play Tannu’s Song 🎧"; };
+        } else {
+          window.open(cleanLink, "_blank", "noopener,noreferrer");
+        }
+      } else {
+        // Friendly message while songLink is still blank
+        playBtnIcon.textContent = "🎧";
+        playBtnText.textContent = "Song Dropping Soon...";
+        songStatusMessage.innerHTML = hasUploadedPhoto
+          ? "<strong>Song dropping soon... stay tuned 🎧</strong> (A custom track handpicked just for this photo is on the way!)"
+          : "<strong>Song dropping soon... stay tuned 🎧</strong> Upload your photo on the left first so the vibe is ready!";
+      }
+    });
+
+    // =========================================================================
+    // INITIALIZE ON WINDOW LOAD
+    // =========================================================================
+    window.addEventListener("resize", resizeCatchCanvas);
+    window.onload = function () {
+      renderGoodThingsCards();
+      resizeCatchCanvas();
+      initMemoryGame();
+    };
+  </script>
+</body>
+</html>
